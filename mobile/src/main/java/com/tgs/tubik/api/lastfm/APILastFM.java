@@ -17,8 +17,8 @@ public interface APILastFM {
     String URL = "https://ws.audioscrobbler.com/2.0/";
 
     // read this http://www.last.fm/api/authentication
-    String API_KEY = "the key...";
-    String SECRET_KEY = "secret key...";
+    String API_KEY = "78d6f1bfc4b48ace7f27f8a66f9d6473";
+    String SECRET_KEY = "df6416ba000f78c34b20771188cd3ac8";
 
     // auth
     @GET("auth.getToken")

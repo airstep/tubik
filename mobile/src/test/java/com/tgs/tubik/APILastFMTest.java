@@ -37,11 +37,23 @@ public class APILastFMTest extends APIBaseTest {
     private APILastFM mApi;
     private static Session mSession;
 
+    private LastFMConfig lastFMConfig;
+
+    private class LastFMConfig {
+        String username = "username";
+        String password = "password";
+    }
+
     public APILastFMTest() throws IOException {
         if (cache == null) {
             cache = new Cache(new File("./build/tmp/test-ok-cache"), 20 * 1024 * 1024);
             cache.evictAll();
         }
+        if (config == null) {
+            config = new Config(new LastFMConfig());
+            lastFMConfig = (LastFMConfig) config.get();
+        }
+
     }
 
     @Before
@@ -82,8 +94,8 @@ public class APILastFMTest extends APIBaseTest {
     @Test
     @Order(order = 2)
     public void getMobileSession() {
-        String username = "backneomind";
-        String password = "du7zooR3";
+        String username = lastFMConfig.username;
+        String password = lastFMConfig.password;
 
         if (!StringUtilities.isMD5(password))
             password = StringUtilities.md5(password);

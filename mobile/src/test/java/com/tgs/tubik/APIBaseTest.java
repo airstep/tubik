@@ -1,11 +1,23 @@
 package com.tgs.tubik;
 
+import android.annotation.TargetApi;
+import android.os.Build;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.tgs.tubik.api.app.APITubik;
 import com.tgs.tubik.api.lastfm.model.Error;
 import com.tgs.tubik.order.OrderedRunner;
+import com.tgs.tubik.tools.logger.Log;
 
 import org.junit.runner.RunWith;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.Writer;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -26,6 +38,8 @@ public class APIBaseTest {
 
     APITubik mApiTubik;
     Retrofit retrofitTubik;
+
+    Config config;
 
     final int CONNECTION_TIMEOUT = 15;
 
@@ -67,5 +81,53 @@ public class APIBaseTest {
             fail(err.getMessage());
         else
             fail(e.getMessage());
+    }
+
+    class Config {
+        private File mConfigFile;
+        private Object mTarget;
+
+        @TargetApi(Build.VERSION_CODES.KITKAT)
+        Config(Object target) throws IOException {
+            String name = target.getClass().getSimpleName();
+            mTarget = target;
+
+            File configFolder = new File("./config");
+            if (!configFolder.exists()) {
+                if (configFolder.mkdirs()) {
+                    Log.d(Config.class.getSimpleName(), "VK config folder created!");
+                } else {
+                    Log.e(Config.class.getSimpleName(), "Can not create VK config folder!");
+                }
+            }
+            mConfigFile = new File("./config/" + name + ".json");
+            if (!mConfigFile.exists()) {
+                try {
+                    if (mConfigFile.createNewFile()) {
+                        Log.d(Config.class.getSimpleName(), "VK config file created. Please fill it!");
+                    } else {
+                        Log.e(Config.class.getSimpleName(), "Can not create VK config file!");
+                    }
+                    try (Writer writer = new FileWriter(mConfigFile)) {
+                        Gson gson = new GsonBuilder().create();
+                        gson.toJson(target, writer);
+                    }
+                    throw new IOException("Please fill config file with valid data: " + mConfigFile.getAbsolutePath());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        @TargetApi(Build.VERSION_CODES.KITKAT)
+        Object get() {
+            Gson gson = new Gson();
+            try (Reader reader = new FileReader(mConfigFile)) {
+                return gson.fromJson(reader, mTarget.getClass());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 }
