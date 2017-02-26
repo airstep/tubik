@@ -1,0 +1,67 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.2"
+
+    defaultConfig {
+        applicationId "com.tgs.tubik"
+        minSdkVersion 9
+        targetSdkVersion 25
+        versionCode 100
+        versionName "10.0"
+        jackOptions {
+            enabled false
+        }
+    }
+    signingConfigs {
+        release {
+            storeFile file("config/release.keystore")
+            storePassword RELEASE_STORE_PASSWORD
+            keyAlias RELEASE_KEY_ALIAS
+            keyPassword RELEASE_KEY_PASSWORD
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            signingConfig signingConfigs.release
+            def homePath = System.properties['user.home'] + "/bin/tubik_new/"
+            applicationVariants.all { variant ->
+                def newPath = homePath + "com_tgs_tubik_" + defaultConfig.versionCode + ".apk"
+                def outputFile = new File(newPath)
+                variant.outputs.get(0).outputFile = outputFile
+            }
+
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    wearApp project(':wear')
+    testCompile 'junit:junit:4.12'
+
+    testCompile 'com.squareup.okhttp3:logging-interceptor:3.3.0'
+
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
+    compile 'com.android.support:support-v4:25.1.1'
+    compile 'com.android.support:recyclerview-v7:25.1.1'
+
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+
+    compile 'io.reactivex:rxandroid:1.2.1'
+
+    compile 'com.googlecode.android-query:android-query:0.25.9'
+}
+
+apply plugin: 'me.tatarka.retrolambda'

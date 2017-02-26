@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="holo_blue_dark">#660099cc</color>
+    <color name="pressed_holo_dark">#6633b5e5</color>
+    <color name="pressed_holo_paused">#665c5c42</color>
+    <color name="text_color_disabled">#bebebe</color>
+    <color name="btn_player">#66bebebe</color>
+    <color name="line_separate">#388E3C</color>
+    <color name="progress">#80cbc4</color>
+
+    <color name="transparent_red">#55b57564</color>
+    <color name="buy">#CD3E2D</color>
+    <color name="buy_orange">#F49F43</color>
+
+    <!-- text shadow -->
+    <color name="light_font">#FBFBFB</color>
+    <color name="grey_font">#ff9e9e9e</color>
+    <color name="text_shadow">#7F000000</color>
+    <color name="text_shadow_white">#FFFFFF</color>
+
+    <!-- vk -->
+    <color name="vk_color">#5585BC</color>
+    <color name="vk_grey_color">#F0F2F5</color>
+    <color name="vk_white">#fff</color>
+    <color name="vk_smoke_white">#ddd</color>
+    <color name="vk_light_color">#A7C2DF</color>
+    <color name="comment_user">#388E3C</color>
+
+    <color name="pressed_styled">#CC669900</color>
+
+    <!-- Lollipop -->
+    <color name="primary">@color/primary_material_dark</color>
+    <color name="primaryDark">@color/material_blue_grey_900</color>
+    <color name="primaryNavigation">#88000000</color>
+
+    <!-- Google Sign In -->
+    <color name="grey_100">#F5F5F5</color>
+    <color name="grey_300">#E0E0E0</color>
+</resources>

@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Tubik</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_top_tracks">TOP TRACKS</string>
+    <string name="no_network_connection_toast">No network connection</string>
+    <string name="app_path">.tubik</string>
+</resources>

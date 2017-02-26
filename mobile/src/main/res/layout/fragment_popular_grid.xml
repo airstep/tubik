@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gridLastFMTopTracks"
+            android:name="com.tgs.tubik.fragments.FragmentPopular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".ui.fragment.PopularFragment"
+            tools:listitem="@layout/row_top_lastfm_item" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/gridTopAlbums"
+            android:name="com.tgs.tubik.fragments.FragmentPopular"
+            android:layout_below="@+id/gridLastFMTopTracks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layoutManager="LinearLayoutManager"
+            tools:context=".ui.fragment.PopularFragment"
+            tools:listitem="@layout/row_top_lastfm_item" />
+    </RelativeLayout>
+</ScrollView>
