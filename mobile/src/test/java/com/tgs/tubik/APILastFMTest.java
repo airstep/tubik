@@ -3,19 +3,16 @@ package com.tgs.tubik;
 import com.tgs.tubik.api.interceptor.CacheInterceptor;
 import com.tgs.tubik.api.lastfm.APILastFM;
 import com.tgs.tubik.api.lastfm.interceptor.LastFMKeyInterceptor;
-import com.tgs.tubik.api.lastfm.model.Error;
 import com.tgs.tubik.api.lastfm.model.Session;
 import com.tgs.tubik.api.lastfm.model.album.Albums;
 import com.tgs.tubik.api.lastfm.model.tag.Tags;
 import com.tgs.tubik.api.lastfm.model.track.Tracks;
 import com.tgs.tubik.order.Order;
-import com.tgs.tubik.order.OrderedRunner;
 import com.tgs.tubik.tools.StringUtilities;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,13 +22,10 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static okhttp3.logging.HttpLoggingInterceptor.Level.BODY;
-import static okhttp3.logging.HttpLoggingInterceptor.Level.NONE;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -39,13 +33,9 @@ import static org.junit.Assert.fail;
 /**
  * To work on unit tests, switch the Test Artifact in the Build Variants view.
  */
-@RunWith(OrderedRunner.class)
-public class APILastFMTest {
-    private Cache cache;
-
+public class APILastFMTest extends APIBaseTest {
     private APILastFM mApi;
     private static Session mSession;
-    private Retrofit retrofit;
 
     public APILastFMTest() throws IOException {
         if (cache == null) {
@@ -56,8 +46,6 @@ public class APILastFMTest {
 
     @Before
     public void setUp() {
-        int CONNECTION_TIMEOUT = 15;
-
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .addInterceptor(new LastFMKeyInterceptor())
                 .addInterceptor(provideHttpLoggingInterceptor())
@@ -194,19 +182,5 @@ public class APILastFMTest {
         }
         b.append(secret);
         return StringUtilities.md5(b.toString());
-    }
-
-    private static HttpLoggingInterceptor provideHttpLoggingInterceptor() {
-        HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor(System.out::println);
-        httpLoggingInterceptor.setLevel(BuildConfig.DEBUG ? BODY : NONE);
-        return httpLoggingInterceptor;
-    }
-
-    private void checkFail(Throwable e) {
-        Error err = Error.parse(retrofit, e);
-        if (err.getMessage() != null)
-            fail(err.getMessage());
-        else
-            fail(e.getMessage());
     }
 }
